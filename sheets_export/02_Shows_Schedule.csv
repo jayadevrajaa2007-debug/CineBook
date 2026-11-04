@@ -1,0 +1,4 @@
+﻿Show_ID,Movie_Title,Showtime,Total_Capacity,Available_Seats,Booked_Seats
+1,Interstellar,07:30 PM,40,33,7
+2,Inception,04:00 PM,40,38,2
+3,The Dark Knight,10:00 PM,40,40,0

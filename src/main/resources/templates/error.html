@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Intermission — Notice')}">
+    <meta charset="UTF-8">
+    <title>Notice — CineBook Picture Palace</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/layout :: header('')}"></header>
+
+<main class="container">
+    <!-- Vintage Intermission Slate Card -->
+    <div class="intermission-slate">
+        <div style="font-size: 2.2rem; color: var(--brass-gold-light); margin-bottom: 0.5rem;" aria-hidden="true">
+            ✦ ✤ ✦
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 3px; color: var(--brass-gold); text-transform: uppercase;">
+            CINEBOOK THEATRE SLATE
+        </div>
+        <h1 class="intermission-title">
+            Intermission
+        </h1>
+        <div style="font-family: var(--font-display); font-size: 1.25rem; color: #fff; margin-bottom: 1rem;"
+            th:text="${errorTitle != null ? errorTitle : 'A Brief Pause in the Programme'}">
+            Notice
+        </div>
+        <p style="color: #d9ccb6; font-size: 1.05rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.5;"
+           th:text="${errorMessage != null ? errorMessage : 'The requested showtime or booking could not be retrieved. Please return to the box office.'}">
+            An unexpected error occurred.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <a th:href="@{/}" class="btn btn-primary">
+                <span>Return to Box Office</span>
+            </a>
+            <a th:href="@{/bookings/lookup}" class="btn btn-secondary" style="background: rgba(255,255,255,0.1); color: #fff; border-color: var(--brass-gold);">
+                <span>Find My Ticket</span>
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

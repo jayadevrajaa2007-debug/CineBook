@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Box Office Ticket Window — Find My Booking')}">
+    <meta charset="UTF-8">
+    <title>Find My Booking — CineBook Picture Palace</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/layout :: header('lookup')}"></header>
+
+<main class="container" style="max-width: 640px;">
+    <!-- Telegram / Paper Flash Alerts -->
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <!-- Ticket Office Window Box -->
+    <div class="ticket-window-box">
+        <div class="teller-header">
+            <div class="teller-grille" aria-hidden="true">
+                <span>║ ║ ║</span>
+                <span>♦ TICKET OFFICE ♦</span>
+                <span>║ ║ ║</span>
+            </div>
+            <div style="font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; letter-spacing: 2px; color: #fff9ea; text-transform: uppercase;">
+                Box Office Inquiry Window
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 1.5px; color: var(--brass-gold-light); margin-top: 2px;">
+                CINEBOOK PICTURE PALACE • EST. 1954
+            </div>
+        </div>
+
+        <div class="teller-body">
+            <p style="color: var(--ink-subtle); font-size: 0.95rem; margin-bottom: 1.5rem; text-align: center;">
+                Please present your booking reference number below to inspect your admission ticket or submit a cancellation request.
+            </p>
+
+            <form th:action="@{/bookings/lookup}" method="get">
+                <div class="form-group">
+                    <label class="form-label" for="code">Booking Identification Number</label>
+                    <input type="text"
+                           id="code"
+                           name="code"
+                           class="form-control"
+                           th:value="${searchCode}"
+                           placeholder="e.g. BK1001 or 1001"
+                           style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;"
+                           autofocus
+                           required>
+                    <small style="color: var(--ink-muted); display: block; margin-top: 0.4rem; font-size: 0.8rem;">
+                        Accepted formats: <code>BK1001</code>, <code>bk1001</code>, or numeric <code>1001</code>.
+                    </small>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 1.75rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <span>Find My Ticket</span>
+                        <span aria-hidden="true">→</span>
+                    </button>
+                    <a th:href="@{/}" class="btn btn-secondary">
+                        <span>Cancel</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

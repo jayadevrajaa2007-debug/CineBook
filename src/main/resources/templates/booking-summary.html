@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Official Admission Ticket — ' + ${booking.formattedBookingId})}">
+    <meta charset="UTF-8">
+    <title>Admission Ticket — CineBook Picture Palace</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<!-- Header (Hidden on print) -->
+<header th:replace="~{fragments/layout :: header('lookup')}"></header>
+
+<main class="container">
+    <!-- Telegram / Paper Flash Alerts -->
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <div class="ticket-wrapper">
+        <!-- Top Toolbar with Back and Print Buttons (Hidden on print) -->
+        <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <a th:href="@{/}" class="btn btn-secondary">
+                <span aria-hidden="true">←</span>
+                <span>All Showtimes</span>
+            </a>
+            <button type="button" class="btn btn-secondary" onclick="window.print();" title="Print admission ticket">
+                <span aria-hidden="true">🖨</span>
+                <span>Print Ticket</span>
+            </button>
+        </div>
+
+        <!-- Large Vintage Admission Ticket (FR-5, FR-7) -->
+        <article class="admission-ticket">
+            <!-- Header Band -->
+            <div class="ticket-header-band">
+                <div>
+                    <div style="font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 2px; color: var(--brass-gold-light); text-transform: uppercase;">
+                        CineBook Picture Palace • Official Admission
+                    </div>
+                    <div style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; color: #fff; margin-top: 2px;">
+                        SINGLE SCREEN AUDITORIUM
+                    </div>
+                </div>
+                <div class="ticket-number-stamp" th:text="'No. ' + ${booking.formattedBookingId}">
+                    No. BK1001
+                </div>
+            </div>
+
+            <!-- Main Body -->
+            <div class="ticket-main-body">
+                <!-- Rubber Stamp: ADMIT (Confirmed) vs CANCELLED (Cancelled) -->
+                <div th:if="${booking.status.name() == 'CONFIRMED'}" class="rubber-stamp stamp-admit" aria-label="Status: Admitted">
+                    ★ ADMIT ★
+                </div>
+                <div th:if="${booking.status.name() == 'CANCELLED'}" class="rubber-stamp stamp-cancelled" aria-label="Status: Cancelled">
+                    CANCELLED
+                </div>
+
+                <!-- Movie Title & Basic Details -->
+                <div style="margin-bottom: 1.5rem; padding-right: 140px;">
+                    <span class="section-ribbon">FEATURE PRESENTATION</span>
+                    <h1 style="font-family: var(--font-display); font-size: 2.1rem; color: var(--velvet-red-dark); line-height: 1.2; margin: 0.25rem 0;" th:text="${booking.show.movieName}">
+                        Interstellar
+                    </h1>
+                    <div style="font-size: 0.95rem; color: var(--ink-subtle); margin-top: 0.35rem;">
+                        <span>Showtime: <strong style="color: var(--velvet-red-dark); font-family: var(--font-display);" th:text="${booking.show.formattedShowTime}">7:30 PM</strong></span>
+                        <span style="margin: 0 0.5rem;">•</span>
+                        <span>Hall: Main Proscenium</span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--ink-muted); margin-top: 0.2rem;" th:text="'Issued: ' + ${booking.formattedCreatedAt}">
+                        Issued: 04 Nov 2026, 09:12 PM
+                    </div>
+                </div>
+
+                <!-- Cancellation & Refund Notice (FR-7) -->
+                <div th:if="${booking.status.name() == 'CANCELLED'}" class="telegram-alert telegram-error" style="margin: 1.5rem 0;">
+                    <div class="telegram-header">
+                        <span>CANCELLATION & REFUND RECEIPT</span>
+                        <span th:text="${booking.formattedCancelledAt}">04 Nov 2026, 09:15 PM</span>
+                    </div>
+                    <div class="telegram-body">
+                        <div>
+                            <strong>Booking Cancelled:</strong> Reserved seats have been freed and released back to the auditorium.
+                            <div style="font-size: 1.15rem; font-family: var(--font-display); font-weight: 700; color: var(--velvet-red-dark); margin-top: 0.35rem;">
+                                Net Refund Issued (80% Policy): <span th:text="'Rs. ' + ${booking.refundAmount}">Rs. 360.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Receipt Table -->
+                <table class="ticket-receipt-table">
+                    <tbody>
+                        <tr>
+                            <th>Reserved Seats & Tiers</th>
+                            <td>
+                                <strong style="font-family: var(--font-display); font-size: 1.1rem; color: var(--velvet-red-dark);" th:text="${booking.seatsWithTierSummary}">
+                                    C3, C4 (PREMIUM)
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Admission Subtotal</th>
+                            <td th:text="'Rs. ' + ${booking.subtotal}">Rs. 500.00</td>
+                        </tr>
+                        <tr th:if="${booking.couponCode != null}">
+                            <th>
+                                <span>Promotional Voucher</span>
+                                <span style="font-family: var(--font-mono); color: var(--forest-green); font-size: 0.85rem; margin-left: 0.4rem;" th:text="'[' + ${booking.couponCode} + ']'">[CINE10]</span>
+                            </th>
+                            <td style="color: var(--forest-green); font-weight: 700;" th:text="'- Rs. ' + ${booking.discountAmount}">
+                                - Rs. 50.00
+                            </td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <th>Total Amount Paid</th>
+                            <td th:text="'Rs. ' + ${booking.totalAmount}">Rs. 450.00</td>
+                        </tr>
+                        <tr th:if="${booking.status.name() == 'CANCELLED'}">
+                            <th style="color: var(--velvet-red); font-weight: 700;">Refund Credited (80%)</th>
+                            <td style="color: var(--velvet-red); font-weight: 700;" th:text="'Rs. ' + ${booking.refundAmount}">
+                                Rs. 360.00
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Simulated Barcode Graphic -->
+                <div class="ticket-barcode-panel">
+                    <div class="simulated-barcode" aria-hidden="true"></div>
+                    <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-muted); max-width: 320px; margin: 0 auto;">
+                        <span th:text="${booking.formattedBookingId} + '-AUTH'">BK1001-AUTH</span>
+                        <span>CINEBOOK-VERIFIED</span>
+                    </div>
+                </div>
+
+                <!-- Action Controls (Hidden on print) -->
+                <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; border-top: 1px dashed #d9ccb6; padding-top: 1.5rem;">
+                    <a th:href="@{/}" class="btn btn-secondary">
+                        <span aria-hidden="true">←</span>
+                        <span>Book Another Movie</span>
+                    </a>
+
+                    <!-- Cancellation Button (FR-7) -->
+                    <form th:if="${booking.status.name() == 'CONFIRMED'}"
+                          th:action="@{'/bookings/' + ${booking.id} + '/cancel'}"
+                          method="post"
+                          onsubmit="return confirm('Are you sure you wish to cancel booking ' + '[[${booking.formattedBookingId}]]' + '? You will receive an 80% refund (Rs. ' + '[[${booking.totalAmount.multiply(T(java.math.BigDecimal).valueOf(80)).divide(T(java.math.BigDecimal).valueOf(100), 2, T(java.math.RoundingMode).HALF_UP)}]]' + ').');">
+                        <button type="submit" class="btn btn-danger">
+                            <span>Cancel Booking (80% Refund)</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </article>
+    </div>
+</main>
+
+<!-- Footer (Hidden on print) -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Now Showing • Feature Presentations')}">
+    <meta charset="UTF-8">
+    <title>CineBook Picture Palace</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<!-- Header with Marquee and Drapes -->
+<header th:replace="~{fragments/layout :: header('shows')}"></header>
+
+<main class="container">
+    <!-- Telegram / Paper Flash Alerts -->
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <!-- Intro Heading -->
+    <div class="section-header">
+        <span class="section-ribbon">TODAY'S GRAND PROGRAMME</span>
+        <h1 class="section-title">Now Showing on the Big Screen</h1>
+        <div class="section-divider" aria-hidden="true">♦ ✦ ♦</div>
+        <p class="section-subtitle">
+            Welcome to the historic CineBook Picture Palace. Single-screen cinema at its grandest, presented with pristine picture and stereophonic sound.
+        </p>
+    </div>
+
+    <!-- Seat Prices Strip (FR-3, prices strictly injected from SeatType enum) -->
+    <div class="pricing-strip">
+        <div class="pricing-strip-title">
+            <span aria-hidden="true">🎟</span>
+            <span>Box Office Admission Tiers</span>
+        </div>
+        <div class="pricing-strip-badges">
+            <div class="price-pill">
+                <span>Regular (Rows A–B):</span>
+                <strong th:text="'Rs. ' + ${T(com.cinebook.model.SeatType).REGULAR.price}">Rs. 150</strong>
+            </div>
+            <div class="price-pill">
+                <span>Premium (Rows C–D):</span>
+                <strong th:text="'Rs. ' + ${T(com.cinebook.model.SeatType).PREMIUM.price}">Rs. 250</strong>
+            </div>
+            <div class="price-pill">
+                <span>VIP Lounge (Row E):</span>
+                <strong th:text="'Rs. ' + ${T(com.cinebook.model.SeatType).VIP.price}">Rs. 400</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shows Grid: Vintage Movie Poster Cards (FR-1) -->
+    <div class="show-grid">
+        <article th:each="show, stat : ${shows}" class="poster-card">
+            <!-- Framed Poster Art with unique gradient per show -->
+            <div class="poster-art" th:classappend="'poster-variant-' + ${(stat.index % 3) + 1}">
+                <div class="poster-art-inner-frame" aria-hidden="true"></div>
+                <div class="poster-eyebrow">
+                    <span>Feature Film</span>
+                    <span>Auditorium 1</span>
+                </div>
+                <div class="poster-title-area">
+                    <h2 class="poster-movie-title" th:text="${show.movieName}">Movie Title</h2>
+                    <div class="poster-ornament" aria-hidden="true">★ ★ ★</div>
+                </div>
+                <div class="poster-eyebrow">
+                    <span>Continuous Showing</span>
+                    <span>40 Seats Only</span>
+                </div>
+            </div>
+
+            <!-- Poster Card Details -->
+            <div class="poster-body">
+                <div class="showtime-plaque">
+                    <span class="showtime-label">Curtain Up:</span>
+                    <span class="showtime-value" th:text="${show.formattedShowTime}">7:30 PM</span>
+                </div>
+
+                <div class="poster-meta-strip">
+                    <span>Auditorium: Main Hall</span>
+                    <span>Format: 35mm Deluxe</span>
+                </div>
+
+                <a th:href="@{'/shows/' + ${show.id}}" class="btn btn-primary btn-block">
+                    <span>Reserve Seats</span>
+                    <span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <!-- Quick Ticket Retrieval Box (Lookup) -->
+    <div class="vintage-panel vintage-panel-brass" style="margin-top: 2rem;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;">
+            <div>
+                <span class="section-ribbon">BOX OFFICE WINDOW</span>
+                <h2 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--velvet-red-dark); margin-bottom: 0.25rem;">
+                    Already Holding an Admission Ticket?
+                </h2>
+                <p style="color: var(--ink-subtle); font-size: 0.95rem;">
+                    Enter your booking reference number to inspect your seat reservation or request a refund.
+                </p>
+            </div>
+            <form th:action="@{/bookings/lookup}" method="get" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <input type="text"
+                       name="code"
+                       class="form-control"
+                       placeholder="e.g. BK1001 or 1001"
+                       style="width: 220px;"
+                       required>
+                <button type="submit" class="btn btn-secondary">
+                    <span>Find Ticket</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

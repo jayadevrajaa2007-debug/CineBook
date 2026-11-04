@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head(${show.movieName} + ' — Auditorium Seat Selection')}">
+    <meta charset="UTF-8">
+    <title>Select Seats — CineBook</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<!-- Header with Marquee & Drapes -->
+<header th:replace="~{fragments/layout :: header('shows')}"></header>
+
+<main class="container">
+    <!-- Telegram / Paper Flash Alerts -->
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <!-- Show Information Card -->
+    <div class="vintage-panel" style="margin-bottom: 2rem;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.25rem;">
+            <div>
+                <span class="section-ribbon">MAIN AUDITORIUM • FEATURE PROGRAMME</span>
+                <h1 class="section-title" style="text-align: left; margin-bottom: 0.25rem;" th:text="${show.movieName}">Interstellar</h1>
+                <div style="display: flex; align-items: center; gap: 1rem; color: var(--ink-subtle);">
+                    <span>Curtain Time: <strong style="color: var(--velvet-red-dark); font-family: var(--font-display); font-size: 1.1rem;" th:text="${show.formattedShowTime}">7:30 PM</strong></span>
+                    <span>•</span>
+                    <span>Format: 35mm Deluxe Panavision</span>
+                </div>
+            </div>
+            <div style="text-align: right; background: var(--paper-cream); padding: 0.75rem 1.25rem; border: var(--border-brass-single); border-radius: var(--radius-sm);">
+                <div style="font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 1.5px; color: var(--ink-muted); text-transform: uppercase;">Box Office Status</div>
+                <div style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--forest-green-dark);">
+                    <span th:text="${availableCount}">38</span> <span style="font-size: 0.85rem; font-weight: normal; color: var(--ink-subtle);">/ 40 Seats Available</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-Column Layout (Seat Map on Left, Your Tickets on Right) -->
+    <div class="show-layout">
+        <!-- LEFT: Proscenium Screen & Theatre Chairs Grid -->
+        <div class="auditorium-hall">
+            <!-- Proscenium Arch Screen with Soft Stage Lighting -->
+            <div class="proscenium-stage">
+                <div class="proscenium-arch">
+                    <span>★ THE PROSCENIUM SCREEN ★</span>
+                </div>
+                <div class="stage-light-beam" aria-hidden="true"></div>
+            </div>
+
+            <!-- Seat Column Numbers (1-8 with center aisle separation between 4 and 5) -->
+            <div class="seat-col-header" aria-hidden="true">
+                <span class="col-num">1</span>
+                <span class="col-num">2</span>
+                <span class="col-num">3</span>
+                <span class="col-num aisle-gap-right">4</span>
+                <span class="col-num">5</span>
+                <span class="col-num">6</span>
+                <span class="col-num">7</span>
+                <span class="col-num">8</span>
+            </div>
+
+            <!-- 5 x 8 Seat Grid (Rows A..E, Seats 1..8) driven by Show.buildSeatGrid() -->
+            <div id="seatGrid">
+                <th:block th:each="row, rowStat : ${grid}">
+                    <!-- Tier Ribbon Header at start of each tier -->
+                    <div th:if="${rowStat.index == 0}" class="tier-ribbon tier-ribbon-regular">
+                        <span>Orchestra Regular (Rows A–B)</span>
+                        <span th:text="'Rs. ' + ${tierPrices['REGULAR']}">Rs. 150</span>
+                    </div>
+                    <div th:if="${rowStat.index == 2}" class="tier-ribbon tier-ribbon-premium">
+                        <span>Mezzanine Premium (Rows C–D)</span>
+                        <span th:text="'Rs. ' + ${tierPrices['PREMIUM']}">Rs. 250</span>
+                    </div>
+                    <div th:if="${rowStat.index == 4}" class="tier-ribbon tier-ribbon-vip">
+                        <span>★ Royal VIP Lounge (Row E) ★</span>
+                        <span th:text="'Rs. ' + ${tierPrices['VIP']}">Rs. 400</span>
+                    </div>
+
+                    <!-- Seat Row -->
+                    <div class="seat-row">
+                        <!-- Left Row Letter -->
+                        <div class="row-letter" th:text="${#strings.substring('ABCDE', rowStat.index, rowStat.index + 1)}" aria-hidden="true">A</div>
+
+                        <!-- 8 Seats in Row with Center Aisle Gap -->
+                        <div class="seats-group">
+                            <button type="button"
+                                    th:each="seat, seatStat : ${row}"
+                                    th:id="'seat-' + ${seat.code}"
+                                    th:data-code="${seat.code}"
+                                    th:data-price="${seat.seatType.price}"
+                                    th:data-tier="${seat.seatType.name()}"
+                                    th:data-booked="${seat.booked}"
+                                    th:classappend="${seat.cssClass} + (${seatStat.index == 3} ? ' aisle-gap-right' : '')"
+                                    class="seat"
+                                    th:disabled="${seat.booked}"
+                                    th:aria-label="${seat.ariaLabel}"
+                                    th:aria-disabled="${seat.booked}"
+                                    th:title="${seat.displayTitle}">
+                                <span class="seat-code-text" th:text="${seat.code}">A1</span>
+                                <span class="seat-status-mark seat-icon" th:text="${seat.icon}">O</span>
+                            </button>
+                        </div>
+
+                        <!-- Right Row Letter -->
+                        <div class="row-letter" th:text="${#strings.substring('ABCDE', rowStat.index, rowStat.index + 1)}" aria-hidden="true">A</div>
+                    </div>
+                </th:block>
+            </div>
+
+            <!-- Seat States & Tier Legend -->
+            <div class="legend-box">
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-reg">O</span>
+                    <span>Regular (Rs. <span th:text="${tierPrices['REGULAR']}">150</span>)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-prem">O</span>
+                    <span>Premium (Rs. <span th:text="${tierPrices['PREMIUM']}">250</span>)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-vip">O</span>
+                    <span>VIP (Rs. <span th:text="${tierPrices['VIP']}">400</span>)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-selected">✓</span>
+                    <span>Selected</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-booked">X</span>
+                    <span>Booked</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: "Your Tickets" Panel Styled as a Vintage Ticket Stub -->
+        <aside class="ticket-panel" aria-label="Order Summary and Reservation Checkout">
+            <div class="ticket-panel-header">
+                <div class="ticket-panel-title">Your Tickets</div>
+                <div class="ticket-panel-sub">Admission Stub</div>
+            </div>
+
+            <div class="ticket-panel-body">
+                <!-- Perforated Cutout Divider -->
+                <div class="perforated-cutout" aria-hidden="true">
+                    <div class="perforated-dashed-line"></div>
+                </div>
+
+                <form th:action="@{'/shows/' + ${show.id} + '/book'}" method="post" id="bookingForm">
+                    <!-- Hidden field updated by JavaScript clicks -->
+                    <input type="hidden" id="seatCodesHidden">
+
+                    <!-- Selected Seats Display -->
+                    <div class="form-group">
+                        <label class="form-label" for="seatCodesInput">Reserved Seat Codes</label>
+                        <!-- Works with and without JS: name="seatCodes" -->
+                        <input type="text"
+                               id="seatCodesInput"
+                               name="seatCodes"
+                               class="form-control"
+                               placeholder="Click seats above or type e.g. C3, C4"
+                               autocomplete="off">
+                        <small style="color: var(--ink-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+                            Click theatre chairs or type codes separated by commas.
+                        </small>
+                    </div>
+
+                    <!-- Selected Seat Chips Container -->
+                    <div id="liveSelectedSeats" class="chips-container">
+                        <span class="empty-chips-msg">No seats selected yet. Click any available seat in the auditorium.</span>
+                    </div>
+
+                    <!-- Coupon Code Input -->
+                    <div class="form-group">
+                        <label class="form-label" for="couponCode">
+                            Promotional Voucher
+                            <span style="font-weight: normal; color: var(--brass-gold-dark);">(e.g. CINE10)</span>
+                        </label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text"
+                                   id="couponCode"
+                                   name="couponCode"
+                                   class="form-control"
+                                   placeholder="Voucher code"
+                                   style="text-transform: uppercase; font-family: var(--font-mono); font-weight: 700;">
+                        </div>
+                    </div>
+
+                    <!-- Subtotal & Running Total Lines -->
+                    <div class="summary-line">
+                        <span>Admission Subtotal:</span>
+                        <strong id="liveRunningTotal">Rs. 0.00</strong>
+                    </div>
+
+                    <div class="summary-line summary-total">
+                        <span>Estimated Total:</span>
+                        <span id="liveRunningTotalFinal">Rs. 0.00</span>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button type="submit"
+                                id="bookSubmitBtn"
+                                class="btn btn-primary btn-block disabled"
+                                disabled>
+                            <span>Confirm & Book Tickets</span>
+                        </button>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <a th:href="@{/}" class="btn btn-secondary btn-block" style="min-height: 38px; font-size: 0.85rem;">
+                            <span>← Return to Showtimes</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script th:src="@{/js/seat-map.js}"></script>
+</body>
+</html>
