@@ -1,0 +1,1659 @@
+/* ==========================================================================
+   CineBook Picture Palace — Vintage 1950s Art-Deco Cinema Design System
+   Bright, warm cream paper, velvet curtain red, polished brass gold.
+   Pure CSS & system font stacks. Zero external network dependencies.
+   ========================================================================== */
+
+:root {
+    /* Color Palette */
+    --paper-cream: #f6efe1;
+    --paper-cream-dark: #ebe1cf;
+    --paper-card: #fcf9f2;
+    --paper-card-elevated: #ffffff;
+    
+    --ink-dark: #2b1d14;
+    --ink-subtle: #594235;
+    --ink-muted: #826e62;
+    --ink-faint: #b3a296;
+
+    --velvet-red: #8c1c2b;
+    --velvet-red-dark: #63111d;
+    --velvet-red-light: #ad283b;
+    --velvet-red-wash: rgba(140, 28, 43, 0.08);
+
+    --brass-gold: #b8872b;
+    --brass-gold-light: #d8a548;
+    --brass-gold-dark: #825e1a;
+    --brass-gold-wash: rgba(184, 135, 43, 0.12);
+
+    --forest-green: #2f6b4f;
+    --forest-green-dark: #1f4a36;
+    --forest-green-light: #3d8865;
+    --forest-green-wash: rgba(47, 107, 79, 0.12);
+
+    /* Tier Specific Colors (User Request: Distinct Vintage Palace Tiers) */
+    /* Rows A-B: Muted Teal-Green Velvet */
+    --tier-regular-border: #2a6f67;
+    --tier-regular-bg: #e6f0ee;
+    --tier-regular-text: #1a4d47;
+    --tier-regular-shadow: rgba(42, 111, 103, 0.3);
+
+    /* Rows C-D: Deep Burgundy Velvet */
+    --tier-premium-border: #7a1b2a;
+    --tier-premium-bg: #f5e8ea;
+    --tier-premium-text: #520f1a;
+    --tier-premium-shadow: rgba(122, 27, 42, 0.3);
+
+    /* Row E: Polished Brass-Gold Velvet */
+    --tier-vip-border: #b8872b;
+    --tier-vip-bg: #faf2e1;
+    --tier-vip-text: #6b4d13;
+    --tier-vip-shadow: rgba(184, 135, 43, 0.35);
+
+    /* Typography: System Font Stacks Only */
+    --font-display: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+
+    /* Borders & Ornaments */
+    --border-brass-single: 1px solid var(--brass-gold);
+    --border-brass-double: 3px double var(--brass-gold);
+    --border-paper-subtle: 1px solid #d9ccb6;
+
+    /* Radii */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --radius-pill: 999px;
+
+    /* Transitions */
+    --transition: all 0.2s ease-in-out;
+}
+
+/* ==========================================================================
+   Base & Layout
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--paper-cream);
+    /* Subtle Vintage Textured Paper (Pure CSS) */
+    background-image: 
+        radial-gradient(#e4d6be 1px, transparent 1px),
+        linear-gradient(to right, rgba(235, 225, 207, 0.4) 1px, transparent 1px);
+    background-size: 20px 20px, 40px 40px;
+    color: var(--ink-dark);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--velvet-red);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover, a:focus-visible {
+    color: var(--velvet-red-dark);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Velvet Curtains & Marquee Header
+   ========================================================================== */
+.palace-header {
+    background: #1c0e08;
+    color: #fff;
+    position: relative;
+    border-bottom: 4px solid var(--brass-gold);
+    box-shadow: 0 4px 18px rgba(28, 14, 8, 0.4);
+    z-index: 50;
+}
+
+/* Corner Velvet Drapery Swags (Pure CSS Gradients) */
+.curtain-swag-left,
+.curtain-swag-right {
+    position: absolute;
+    top: 0;
+    width: 140px;
+    height: 90px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.curtain-swag-left {
+    left: 0;
+    background: radial-gradient(ellipse at 0% 0%, var(--velvet-red-dark) 0%, var(--velvet-red) 50%, transparent 80%);
+    border-bottom-right-radius: 60px;
+}
+
+.curtain-swag-right {
+    right: 0;
+    background: radial-gradient(ellipse at 100% 0%, var(--velvet-red-dark) 0%, var(--velvet-red) 50%, transparent 80%);
+    border-bottom-left-radius: 60px;
+}
+
+.header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem 0.75rem;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+/* Marquee Sign */
+.marquee-sign {
+    display: inline-block;
+    background: #150a06;
+    border: 3px double var(--brass-gold);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 2.5rem;
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.8), 0 0 15px rgba(184, 135, 43, 0.3);
+    margin-bottom: 0.75rem;
+}
+
+.marquee-bulbs {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.bulb {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffeb99;
+    box-shadow: 0 0 5px #ffc107, 0 0 10px #ff9800;
+    animation: bulb-flicker 2.2s infinite ease-in-out;
+}
+
+.bulb:nth-child(2n) { animation-delay: 0.35s; }
+.bulb:nth-child(3n) { animation-delay: 0.7s; }
+.bulb:nth-child(5n) { animation-delay: 1.1s; }
+
+@keyframes bulb-flicker {
+    0%, 100% {
+        opacity: 0.95;
+        background: #fff8db;
+        box-shadow: 0 0 6px #ffeb99, 0 0 12px #ffc107;
+    }
+    50% {
+        opacity: 0.45;
+        background: #d4a340;
+        box-shadow: 0 0 2px #d4a340;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bulb {
+        animation: none;
+        opacity: 0.8;
+    }
+}
+
+.marquee-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.marquee-brand:hover {
+    text-decoration: none;
+}
+
+.marquee-sub {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: var(--brass-gold-light);
+    margin-bottom: 2px;
+}
+
+.marquee-title {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #fff9ea;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7), 0 0 12px rgba(216, 165, 72, 0.4);
+    text-transform: uppercase;
+}
+
+.marquee-ornament {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: var(--brass-gold);
+    margin-top: 2px;
+}
+
+/* Palace Navigation Bar */
+.palace-nav {
+    margin-top: 0.4rem;
+}
+
+.nav-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(184, 135, 43, 0.4);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 1.5rem;
+}
+
+.nav-item {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #e5d5be;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.nav-item:hover, .nav-item.active {
+    color: #fffaee;
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.nav-item.active {
+    border-bottom: 2px solid var(--brass-gold-light);
+}
+
+.nav-divider {
+    color: var(--brass-gold);
+    font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   Container & Cards
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2.25rem 1.25rem 4rem;
+    flex: 1;
+}
+
+.vintage-panel {
+    background: var(--paper-card);
+    border: 1px solid #dcd1be;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 14px rgba(43, 29, 20, 0.08), 0 1px 3px rgba(43, 29, 20, 0.05);
+    padding: 1.75rem;
+    position: relative;
+}
+
+.vintage-panel-brass {
+    border: var(--border-brass-double);
+    background: var(--paper-card);
+}
+
+/* Section Headings */
+.section-header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+    position: relative;
+}
+
+.section-ribbon {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--brass-gold-dark);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--velvet-red-dark);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--brass-gold);
+    font-size: 0.9rem;
+    margin: 0.5rem auto 0;
+    max-width: 320px;
+}
+
+.section-divider::before,
+.section-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--brass-gold);
+    opacity: 0.6;
+}
+
+.section-subtitle {
+    font-size: 1.02rem;
+    color: var(--ink-subtle);
+    max-width: 620px;
+    margin: 0.5rem auto 0;
+}
+
+/* ==========================================================================
+   Home Page: Vintage Movie Poster Cards (FR-1)
+   ========================================================================== */
+.show-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.poster-card {
+    background: var(--paper-card);
+    border: 2px solid var(--brass-gold);
+    border-radius: var(--radius-md);
+    box-shadow: 0 6px 18px rgba(43, 29, 20, 0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    position: relative;
+}
+
+.poster-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(43, 29, 20, 0.18);
+    border-color: var(--brass-gold-light);
+}
+
+/* Art-Deco Framed Poster Header with Unique Palette per Show */
+.poster-art {
+    height: 220px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-bottom: 3px double var(--brass-gold);
+    color: #fff;
+}
+
+/* Variant 1: Interstellar — Midnight Cosmic Gold */
+.poster-art.poster-variant-1 {
+    background: linear-gradient(135deg, #121929 0%, #1f2a44 60%, #3d2c44 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Variant 2: Inception — Surreal Emerald Dream */
+.poster-art.poster-variant-2 {
+    background: linear-gradient(135deg, #0e2922 0%, #174237 60%, #2f4f43 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Variant 3: The Dark Knight — Vintage Noir Amber */
+.poster-art.poster-variant-3 {
+    background: linear-gradient(135deg, #241412 0%, #3e1b1d 60%, #1a0f0d 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.poster-art-inner-frame {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    border: 1px solid rgba(216, 165, 72, 0.4);
+    border-radius: var(--radius-sm);
+    pointer-events: none;
+}
+
+.poster-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    color: var(--brass-gold-light);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.poster-title-area {
+    text-align: center;
+    margin: auto 0;
+}
+
+.poster-movie-title {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff9ea;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(216, 165, 72, 0.4);
+    line-height: 1.2;
+}
+
+.poster-ornament {
+    font-size: 1.25rem;
+    color: var(--brass-gold-light);
+    margin-top: 4px;
+}
+
+/* Poster Card Details */
+.poster-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    background: var(--paper-card);
+}
+
+.showtime-plaque {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--paper-cream);
+    border: 1px solid #d9ccb6;
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1.25rem;
+}
+
+.showtime-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.showtime-value {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--velvet-red-dark);
+}
+
+.poster-meta-strip {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    border-top: 1px dashed #d9ccb6;
+    padding-top: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Seat Pricing Strip on Home (FR-3, enum-injected) */
+.pricing-strip {
+    background: var(--paper-cream-dark);
+    border: var(--border-brass-double);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.75rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+}
+
+.pricing-strip-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--velvet-red-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pricing-strip-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.price-pill {
+    background: var(--paper-card);
+    border: 1px solid var(--brass-gold);
+    border-radius: var(--radius-pill);
+    padding: 0.35rem 1rem;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.price-pill strong {
+    font-family: var(--font-display);
+    color: var(--velvet-red-dark);
+}
+
+/* ==========================================================================
+   Show Page: Proscenium Screen & Theatre Chairs
+   ========================================================================== */
+.show-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+@media (max-width: 960px) {
+    .show-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Proscenium Arch Screen */
+.proscenium-stage {
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-top: 0.5rem;
+}
+
+.proscenium-arch {
+    width: 80%;
+    max-width: 520px;
+    margin: 0 auto;
+    height: 38px;
+    background: linear-gradient(to bottom, #d8a548 0%, #b8872b 40%, #825e1a 100%);
+    border-top-left-radius: 90px 40px;
+    border-top-right-radius: 90px 40px;
+    box-shadow: 0 4px 15px rgba(184, 135, 43, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid #ffeb99;
+}
+
+.proscenium-arch span {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: #1a0e05;
+    text-transform: uppercase;
+}
+
+.stage-light-beam {
+    width: 74%;
+    max-width: 480px;
+    height: 40px;
+    margin: -4px auto 0;
+    background: linear-gradient(to bottom, rgba(255, 235, 153, 0.35) 0%, rgba(246, 239, 225, 0) 100%);
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+    pointer-events: none;
+}
+
+/* Auditorium Hall & Grid */
+.auditorium-hall {
+    background: var(--paper-card);
+    border: var(--border-brass-double);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 1.25rem;
+    box-shadow: 0 4px 16px rgba(43, 29, 20, 0.08);
+}
+
+/* Column Seat Numbers Header (1-8 with center aisle gap) */
+.seat-col-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 0.75rem;
+    padding: 0 32px;
+}
+
+.col-num {
+    width: clamp(28px, 6.2vw, 42px);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink-muted);
+}
+
+.col-num.aisle-gap-right {
+    margin-right: clamp(12px, 2.5vw, 24px);
+}
+
+/* Tier Section Banners */
+.tier-ribbon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-sm);
+    margin: 1rem 0 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.tier-ribbon-regular {
+    background: var(--tier-regular-bg);
+    border: 1px solid var(--tier-regular-border);
+    color: var(--tier-regular-text);
+}
+
+.tier-ribbon-premium {
+    background: var(--tier-premium-bg);
+    border: 1px solid var(--tier-premium-border);
+    color: var(--tier-premium-text);
+}
+
+.tier-ribbon-vip {
+    background: var(--tier-vip-bg);
+    border: 1px solid var(--tier-vip-border);
+    color: var(--tier-vip-text);
+    box-shadow: 0 2px 8px var(--tier-vip-shadow);
+}
+
+/* Seat Row (Letters on both sides + 8 seats + center aisle) */
+.seat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 0.65rem;
+}
+
+.row-letter {
+    width: 24px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--velvet-red-dark);
+}
+
+.seats-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Center Aisle Separation between Seat 4 and 5 */
+.seat.aisle-gap-right {
+    margin-right: clamp(12px, 2.5vw, 24px);
+}
+
+/* Velvet Theatre Chair Button */
+.seat {
+    width: clamp(34px, 7.5vw, 44px);
+    height: clamp(40px, 8.8vw, 48px);
+    min-width: 32px;
+    min-height: 38px;
+    border-radius: 8px 8px 4px 4px;
+    border: 2px solid;
+    cursor: pointer;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    position: relative;
+    transition: var(--transition);
+    user-select: none;
+    outline: none;
+}
+
+/* Armrests detail via pseudo elements */
+.seat::before, .seat::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    width: 3px;
+    height: 14px;
+    background: currentColor;
+    opacity: 0.35;
+    border-radius: 2px;
+}
+.seat::before { left: 1px; }
+.seat::after { right: 1px; }
+
+.seat-code-text {
+    font-family: var(--font-mono);
+    font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.seat-status-mark {
+    font-size: clamp(0.62rem, 1.6vw, 0.72rem);
+    font-weight: 800;
+    line-height: 1;
+    margin-top: 3px;
+}
+
+/* 1. Regular Tier Seats (Teal-Green Velvet) */
+.seat.free.tier-regular {
+    background: var(--tier-regular-bg);
+    border-color: var(--tier-regular-border);
+    color: var(--tier-regular-text);
+}
+
+.seat.free.tier-regular:hover {
+    background: #d4e8e5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--tier-regular-shadow);
+}
+
+/* 2. Premium Tier Seats (Burgundy Velvet) */
+.seat.free.tier-premium {
+    background: var(--tier-premium-bg);
+    border-color: var(--tier-premium-border);
+    color: var(--tier-premium-text);
+}
+
+.seat.free.tier-premium:hover {
+    background: #edd5d8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--tier-premium-shadow);
+}
+
+/* 3. VIP Tier Seats (Brass-Gold Velvet) */
+.seat.free.tier-vip {
+    background: var(--tier-vip-bg);
+    border-color: var(--tier-vip-border);
+    color: var(--tier-vip-text);
+}
+
+.seat.free.tier-vip:hover {
+    background: #f5e4c2;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px var(--tier-vip-shadow);
+}
+
+/* State: Booked (Faded, Diagonal Crosshatch, Disabled) */
+.seat.booked, .seat:disabled {
+    background-color: #ede5d8 !important;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(99, 17, 29, 0.12),
+        rgba(99, 17, 29, 0.12) 3px,
+        transparent 3px,
+        transparent 6px
+    ) !important;
+    border-color: #baa895 !important;
+    color: #8c7665 !important;
+    cursor: not-allowed;
+    opacity: 0.65;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* State: Selected (Raised 3D Look, Deep Forest Green with Gold Outline) */
+.seat.selected {
+    background: var(--forest-green) !important;
+    border-color: var(--brass-gold-light) !important;
+    color: #ffffff !important;
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 0 6px 14px rgba(47, 107, 79, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.4) !important;
+    z-index: 5;
+}
+
+.seat:focus-visible {
+    box-shadow: 0 0 0 3px var(--brass-gold);
+}
+
+/* Legend Panel */
+.legend-box {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed #d9ccb6;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--ink-subtle);
+}
+
+.legend-swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 2px solid;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
+}
+
+.legend-swatch.swatch-reg {
+    background: var(--tier-regular-bg);
+    border-color: var(--tier-regular-border);
+    color: var(--tier-regular-text);
+}
+
+.legend-swatch.swatch-prem {
+    background: var(--tier-premium-bg);
+    border-color: var(--tier-premium-border);
+    color: var(--tier-premium-text);
+}
+
+.legend-swatch.swatch-vip {
+    background: var(--tier-vip-bg);
+    border-color: var(--tier-vip-border);
+    color: var(--tier-vip-text);
+}
+
+.legend-swatch.swatch-selected {
+    background: var(--forest-green);
+    border-color: var(--brass-gold-light);
+    color: #fff;
+}
+
+.legend-swatch.swatch-booked {
+    background-color: #ede5d8;
+    background-image: repeating-linear-gradient(45deg, rgba(99, 17, 29, 0.15), rgba(99, 17, 29, 0.15) 2px, transparent 2px, transparent 4px);
+    border-color: #baa895;
+    color: #8c7665;
+}
+
+/* ==========================================================================
+   "Your Tickets" Sidebar Panel (Ticket Stub with Scalloped Edge)
+   ========================================================================== */
+.ticket-panel {
+    background: var(--paper-card);
+    border: var(--border-brass-double);
+    border-radius: var(--radius-md);
+    box-shadow: 0 6px 20px rgba(43, 29, 20, 0.12);
+    position: sticky;
+    top: 1rem;
+    overflow: hidden;
+}
+
+.ticket-panel-header {
+    background: var(--velvet-red-dark);
+    color: #fff;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid var(--brass-gold);
+}
+
+.ticket-panel-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff9ea;
+}
+
+.ticket-panel-sub {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: var(--brass-gold-light);
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.ticket-panel-body {
+    padding: 1.5rem;
+}
+
+/* Perforated Edge Divider with Semi-Circle Cutouts */
+.perforated-cutout {
+    position: relative;
+    height: 18px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    margin: 0 -1.5rem 1.25rem;
+}
+
+.perforated-cutout::before,
+.perforated-cutout::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: var(--paper-cream);
+    border-radius: 50%;
+    border: 1px solid #d9ccb6;
+    top: -2px;
+}
+
+.perforated-cutout::before { left: -12px; }
+.perforated-cutout::after { right: -12px; }
+
+.perforated-dashed-line {
+    width: 100%;
+    border-top: 2px dashed #baa895;
+    margin: 0 16px;
+}
+
+/* Selected Seat Chips */
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 44px;
+    margin-bottom: 1.25rem;
+}
+
+.seat-chip {
+    background: var(--paper-cream);
+    border: 1px solid var(--brass-gold);
+    border-radius: var(--radius-sm);
+    padding: 0.35rem 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ink-dark);
+}
+
+.empty-chips-msg {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+/* Subtotal & Total Line */
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--ink-subtle);
+}
+
+.summary-total {
+    border-top: 2px solid var(--brass-gold);
+    padding-top: 0.85rem;
+    margin-top: 0.85rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--velvet-red-dark);
+}
+
+/* Forms & Inputs */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--ink-dark);
+    margin-bottom: 0.4rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    background: var(--paper-cream);
+    border: 1px solid #c9bda7;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--ink-dark);
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--brass-gold);
+    box-shadow: 0 0 0 3px var(--brass-gold-wash);
+    background: #fff;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 44px;
+}
+
+.btn-primary {
+    background: var(--velvet-red);
+    color: #fff9ea;
+    border: 1px solid var(--brass-gold);
+    box-shadow: 0 4px 10px rgba(140, 28, 43, 0.35);
+}
+
+.btn-primary:hover, .btn-primary:focus-visible {
+    background: var(--velvet-red-dark);
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(140, 28, 43, 0.45);
+}
+
+.btn-secondary {
+    background: var(--paper-cream-dark);
+    color: var(--ink-dark);
+    border: 1px solid #c9bda7;
+}
+
+.btn-secondary:hover {
+    background: #dfd3bd;
+    color: var(--ink-dark);
+    text-decoration: none;
+}
+
+.btn-danger {
+    background: #a82020;
+    color: #fff;
+    border: 1px solid #731313;
+}
+
+.btn-danger:hover {
+    background: #801414;
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn.disabled, .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ==========================================================================
+   Booking Summary Page: Large Vintage Admission Ticket (FR-5, FR-7)
+   ========================================================================== */
+.ticket-wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.admission-ticket {
+    background: var(--paper-card);
+    border: var(--border-brass-double);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 26px rgba(43, 29, 20, 0.16);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top & Bottom Scallop Notches (Pure CSS) */
+.ticket-header-band {
+    background: var(--velvet-red-dark);
+    color: #fff;
+    padding: 1.5rem 2rem;
+    border-bottom: 3px double var(--brass-gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: relative;
+}
+
+.ticket-number-stamp {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--brass-gold-light);
+    border: 1px dashed var(--brass-gold);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.ticket-main-body {
+    padding: 2rem;
+    position: relative;
+}
+
+/* Rubber Stamp Effect: ADMIT (Confirmed) vs CANCELLED */
+.rubber-stamp {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 0.4rem 1.25rem;
+    border-radius: var(--radius-sm);
+    border: 4px solid;
+    pointer-events: none;
+    user-select: none;
+    z-index: 10;
+}
+
+.stamp-admit {
+    color: var(--forest-green);
+    border-color: var(--forest-green);
+    background: rgba(47, 107, 79, 0.08);
+    transform: rotate(-10deg);
+    box-shadow: 0 0 0 2px rgba(47, 107, 79, 0.3);
+}
+
+.stamp-cancelled {
+    color: var(--velvet-red);
+    border-color: var(--velvet-red);
+    background: rgba(140, 28, 43, 0.08);
+    transform: rotate(12deg);
+    box-shadow: 0 0 0 2px rgba(140, 28, 43, 0.3);
+}
+
+/* Receipt Details Table */
+.ticket-receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.ticket-receipt-table th,
+.ticket-receipt-table td {
+    padding: 0.65rem 0.5rem;
+    border-bottom: 1px dotted #d9ccb6;
+    font-size: 0.95rem;
+}
+
+.ticket-receipt-table th {
+    text-align: left;
+    color: var(--ink-muted);
+    font-weight: 600;
+    width: 40%;
+}
+
+.ticket-receipt-table td {
+    text-align: right;
+    color: var(--ink-dark);
+}
+
+.ticket-receipt-table .highlight-row td,
+.ticket-receipt-table .highlight-row th {
+    border-top: 2px solid var(--brass-gold);
+    border-bottom: 2px solid var(--brass-gold);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--velvet-red-dark);
+}
+
+/* Barcode Graphic */
+.ticket-barcode-panel {
+    border-top: 2px dashed #baa895;
+    padding-top: 1.25rem;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.simulated-barcode {
+    height: 38px;
+    width: 80%;
+    max-width: 320px;
+    margin: 0 auto 0.4rem;
+    background: repeating-linear-gradient(
+        to right,
+        #2b1d14 0px,
+        #2b1d14 2px,
+        transparent 2px,
+        transparent 5px,
+        #2b1d14 5px,
+        #2b1d14 9px,
+        transparent 9px,
+        transparent 11px,
+        #2b1d14 11px,
+        #2b1d14 13px,
+        transparent 13px,
+        transparent 17px
+    );
+}
+
+/* ==========================================================================
+   Ticket Office Window (Lookup Page)
+   ========================================================================== */
+.ticket-window-box {
+    max-width: 580px;
+    margin: 0 auto;
+    background: var(--paper-card);
+    border: var(--border-brass-double);
+    border-radius: var(--radius-md);
+    box-shadow: 0 6px 20px rgba(43, 29, 20, 0.12);
+    overflow: hidden;
+}
+
+.teller-header {
+    background: #1c0e08;
+    color: #fff;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    border-bottom: 3px double var(--brass-gold);
+}
+
+.teller-grille {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+    color: var(--brass-gold);
+    font-size: 1.2rem;
+}
+
+.teller-body {
+    padding: 2rem;
+}
+
+/* ==========================================================================
+   Intermission Slate (Error Page)
+   ========================================================================== */
+.intermission-slate {
+    max-width: 620px;
+    margin: 2rem auto;
+    background: #1c0e08;
+    color: #fff9ea;
+    border: var(--border-brass-double);
+    border-radius: var(--radius-md);
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(28, 14, 8, 0.5);
+    position: relative;
+}
+
+.intermission-title {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+    color: var(--brass-gold-light);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   Telegram & Paper Alert Notes (Flash Messages)
+   ========================================================================== */
+.flash-container {
+    max-width: 1100px;
+    margin: 0 auto 1.5rem;
+}
+
+.telegram-alert {
+    background: var(--paper-card);
+    border: 2px solid;
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(43, 29, 20, 0.08);
+}
+
+.telegram-success {
+    border-color: var(--forest-green);
+    background: #f1f8f4;
+}
+
+.telegram-error {
+    border-color: var(--velvet-red);
+    background: #faf0f1;
+}
+
+.telegram-header {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 0.35rem;
+    color: var(--ink-muted);
+}
+
+.telegram-body {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.95rem;
+}
+
+.telegram-success .telegram-body { color: var(--forest-green-dark); }
+.telegram-error .telegram-body { color: var(--velvet-red-dark); }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.palace-footer {
+    background: #1c0e08;
+    color: #c9bda7;
+    border-top: 3px double var(--brass-gold);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer-ornament {
+    color: var(--brass-gold);
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.footer-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #fff9ea;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.footer-tagline {
+    font-style: italic;
+    color: var(--brass-gold-light);
+    margin-bottom: 0.75rem;
+}
+
+.footer-meta {
+    font-size: 0.85rem;
+    color: #9c8e7b;
+    margin-bottom: 1rem;
+}
+
+.footer-meta .sep {
+    margin: 0 0.5rem;
+    color: var(--brass-gold);
+}
+
+.footer-copyright {
+    font-size: 0.78rem;
+    color: #7a6e5e;
+}
+
+/* ==========================================================================
+   Print Stylesheet (@media print)
+   Prints ONLY the admission ticket card in clean B&W
+   ========================================================================== */
+@media print {
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .palace-header,
+    .palace-footer,
+    .flash-container,
+    .no-print,
+    .btn,
+    form {
+        display: none !important;
+    }
+
+    .container {
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .admission-ticket {
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+        margin: 0 auto !important;
+    }
+
+    .ticket-header-band {
+        background: #000 !important;
+        color: #fff !important;
+        border-bottom: 2px solid #000 !important;
+    }
+
+    .ticket-number-stamp {
+        border: 1px solid #fff !important;
+        color: #fff !important;
+        background: transparent !important;
+    }
+
+    .rubber-stamp {
+        border-color: #000 !important;
+        color: #000 !important;
+        background: transparent !important;
+    }
+
+    .ticket-receipt-table th,
+    .ticket-receipt-table td {
+        border-color: #ccc !important;
+        color: #000 !important;
+    }
+
+    .ticket-receipt-table .highlight-row td,
+    .ticket-receipt-table .highlight-row th {
+        border-color: #000 !important;
+        color: #000 !important;
+    }
+}
+
+
+/* ==========================================================================
+   Mobile Responsiveness (360px - 768px)
+   ========================================================================== */
+@media (max-width: 600px) {
+    .header-inner {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .curtain-swag-left,
+    .curtain-swag-right {
+        width: 70px;
+        height: 50px;
+    }
+
+    .marquee-sign {
+        padding: 0.5rem 0.75rem;
+        max-width: 100%;
+    }
+
+    .marquee-sub {
+        font-size: 0.6rem;
+        letter-spacing: 1.5px;
+    }
+
+    .marquee-title {
+        font-size: 1.15rem;
+        letter-spacing: 1.5px;
+    }
+
+    .marquee-ornament {
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+    }
+
+    .marquee-bulbs {
+        gap: 4px;
+    }
+
+    .bulb {
+        width: 6px;
+        height: 6px;
+    }
+
+    .nav-links {
+        padding: 0.3rem 0.8rem;
+        gap: 0.75rem;
+    }
+
+    .nav-item {
+        font-size: 0.82rem;
+        letter-spacing: 0.5px;
+    }
+
+    .section-title {
+        font-size: 1.45rem;
+        letter-spacing: 1px;
+    }
+
+    .pricing-strip {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pricing-strip-badges {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .price-pill {
+        justify-content: space-between;
+    }
+
+    .auditorium-hall {
+        padding: 1rem 0.4rem;
+        overflow-x: hidden;
+    }
+
+    .seat-col-header {
+        padding: 0 18px;
+        gap: 4px;
+    }
+
+    .col-num {
+        width: 29px;
+        font-size: 0.7rem;
+    }
+
+    .col-num.aisle-gap-right {
+        margin-right: 8px;
+    }
+
+    .seat-row {
+        gap: 4px;
+    }
+
+    .row-letter {
+        width: 18px;
+        font-size: 0.85rem;
+    }
+
+    .seats-group {
+        gap: 4px;
+    }
+
+    .seat {
+        width: 29px;
+        height: 36px;
+        min-width: 28px;
+        min-height: 34px;
+        padding: 1px;
+        border-width: 1.5px;
+    }
+
+    .seat.aisle-gap-right {
+        margin-right: 8px;
+    }
+
+    .seat-code-text {
+        font-size: 0.62rem;
+    }
+
+    .seat-status-mark {
+        font-size: 0.58rem;
+        margin-top: 1px;
+    }
+
+    .proscenium-arch {
+        width: 95%;
+        height: 32px;
+    }
+
+    .proscenium-arch span {
+        font-size: 0.72rem;
+        letter-spacing: 2px;
+    }
+
+    .stage-light-beam {
+        width: 90%;
+        height: 25px;
+    }
+
+    .ticket-header-band {
+        padding: 1rem;
+    }
+
+    .ticket-main-body {
+        padding: 1.25rem 1rem;
+    }
+
+    .rubber-stamp {
+        position: static;
+        display: inline-block;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+        padding: 0.25rem 0.75rem;
+        transform: none !important;
+    }
+
+    .ticket-main-body > div:first-of-type {
+        padding-right: 0 !important;
+    }
+}

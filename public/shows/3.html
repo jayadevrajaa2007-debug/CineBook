@@ -1,0 +1,839 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dark Knight â€” Auditorium Seat Selection | CineBook Picture Palace</title>
+    <!-- Inline SVG Favicon (Art Deco Golden Ticket Reel) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%238c1c2b'/><circle cx='16' cy='16' r='10' fill='none' stroke='%23b8872b' stroke-width='2'/><circle cx='16' cy='16' r='4' fill='%23b8872b'/><circle cx='16' cy='9' r='1.5' fill='%23f6efe1'/><circle cx='16' cy='23' r='1.5' fill='%23f6efe1'/><circle cx='9' cy='16' r='1.5' fill='%23f6efe1'/><circle cx='23' cy='16' r='1.5' fill='%23f6efe1'/></svg>">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<!-- Header with Marquee & Drapes -->
+<header class="palace-header">
+    <!-- Top Velvet Curtain Swags (CSS Gradients) -->
+    <div class="curtain-swag-left" aria-hidden="true"></div>
+    <div class="curtain-swag-right" aria-hidden="true"></div>
+
+    <div class="header-inner">
+        <!-- Vintage Art-Deco Marquee Header Sign -->
+        <div class="marquee-sign">
+            <div class="marquee-bulbs marquee-bulbs-top" aria-hidden="true">
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+            </div>
+            <div class="marquee-center">
+                <a href="/" class="marquee-brand" aria-label="CineBook Picture Palace Home">
+                    <span class="marquee-sub">â˜… CONTINUOUS SHOWINGS â€¢ SINGLE SCREEN â˜…</span>
+                    <span class="marquee-title">CINEBOOK PICTURE PALACE</span>
+                    <span class="marquee-ornament">â™¦ EST. 1954 â™¦</span>
+                </a>
+            </div>
+            <div class="marquee-bulbs marquee-bulbs-bottom" aria-hidden="true">
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+                <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+            </div>
+        </div>
+
+        <!-- Brass-Trimmed Navigation Bar -->
+        <nav class="palace-nav" aria-label="Main Navigation">
+            <div class="nav-links">
+                <a href="/"
+                   class="nav-item active">
+                    <span class="nav-icon" aria-hidden="true">ðŸŽž</span>
+                    <span>Now Showing</span>
+                </a>
+                <span class="nav-divider" aria-hidden="true">â™¦</span>
+                <a href="/bookings/lookup"
+                   class="nav-item">
+                    <span class="nav-icon" aria-hidden="true">ðŸŽŸ</span>
+                    <span>Find My Ticket</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Telegram / Paper Flash Alerts -->
+    <div class="flash-container">
+    
+    
+</div>
+
+    <!-- Show Information Card -->
+    <div class="vintage-panel" style="margin-bottom: 2rem;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.25rem;">
+            <div>
+                <span class="section-ribbon">MAIN AUDITORIUM â€¢ FEATURE PROGRAMME</span>
+                <h1 class="section-title" style="text-align: left; margin-bottom: 0.25rem;">The Dark Knight</h1>
+                <div style="display: flex; align-items: center; gap: 1rem; color: var(--ink-subtle);">
+                    <span>Curtain Time: <strong style="color: var(--velvet-red-dark); font-family: var(--font-display); font-size: 1.1rem;">10:00 pm</strong></span>
+                    <span>â€¢</span>
+                    <span>Format: 35mm Deluxe Panavision</span>
+                </div>
+            </div>
+            <div style="text-align: right; background: var(--paper-cream); padding: 0.75rem 1.25rem; border: var(--border-brass-single); border-radius: var(--radius-sm);">
+                <div style="font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 1.5px; color: var(--ink-muted); text-transform: uppercase;">Box Office Status</div>
+                <div style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--forest-green-dark);">
+                    <span>40</span> <span style="font-size: 0.85rem; font-weight: normal; color: var(--ink-subtle);">/ 40 Seats Available</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-Column Layout (Seat Map on Left, Your Tickets on Right) -->
+    <div class="show-layout">
+        <!-- LEFT: Proscenium Screen & Theatre Chairs Grid -->
+        <div class="auditorium-hall">
+            <!-- Proscenium Arch Screen with Soft Stage Lighting -->
+            <div class="proscenium-stage">
+                <div class="proscenium-arch">
+                    <span>â˜… THE PROSCENIUM SCREEN â˜…</span>
+                </div>
+                <div class="stage-light-beam" aria-hidden="true"></div>
+            </div>
+
+            <!-- Seat Column Numbers (1-8 with center aisle separation between 4 and 5) -->
+            <div class="seat-col-header" aria-hidden="true">
+                <span class="col-num">1</span>
+                <span class="col-num">2</span>
+                <span class="col-num">3</span>
+                <span class="col-num aisle-gap-right">4</span>
+                <span class="col-num">5</span>
+                <span class="col-num">6</span>
+                <span class="col-num">7</span>
+                <span class="col-num">8</span>
+            </div>
+
+            <!-- 5 x 8 Seat Grid (Rows A..E, Seats 1..8) driven by Show.buildSeatGrid() -->
+            <div id="seatGrid">
+                
+                    <!-- Tier Ribbon Header at start of each tier -->
+                    <div class="tier-ribbon tier-ribbon-regular">
+                        <span>Orchestra Regular (Rows Aâ€“B)</span>
+                        <span>Rs. 150</span>
+                    </div>
+                    
+                    
+
+                    <!-- Seat Row -->
+                    <div class="seat-row">
+                        <!-- Left Row Letter -->
+                        <div class="row-letter" aria-hidden="true">A</div>
+
+                        <!-- 8 Seats in Row with Center Aisle Gap -->
+                        <div class="seats-group">
+                            <button type="button"
+                                    id="seat-A1"
+                                    data-code="A1"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat A1, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A1 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A1</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-A2"
+                                    data-code="A2"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat A2, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A2 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A2</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-A3"
+                                    data-code="A3"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat A3, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A3 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A3</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-A4"
+                                    data-code="A4"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular aisle-gap-right"
+                                    aria-label="Seat A4, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A4 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A4</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-A5"
+                                    data-code="A5"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat A5, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A5 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A5</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-A6"
+                                    data-code="A6"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat A6, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A6 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A6</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-A7"
+                                    data-code="A7"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat A7, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A7 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A7</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-A8"
+                                    data-code="A8"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat A8, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="A8 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">A8</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button>
+                        </div>
+
+                        <!-- Right Row Letter -->
+                        <div class="row-letter" aria-hidden="true">A</div>
+                    </div>
+                
+                    <!-- Tier Ribbon Header at start of each tier -->
+                    
+                    
+                    
+
+                    <!-- Seat Row -->
+                    <div class="seat-row">
+                        <!-- Left Row Letter -->
+                        <div class="row-letter" aria-hidden="true">B</div>
+
+                        <!-- 8 Seats in Row with Center Aisle Gap -->
+                        <div class="seats-group">
+                            <button type="button"
+                                    id="seat-B1"
+                                    data-code="B1"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat B1, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B1 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B1</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-B2"
+                                    data-code="B2"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat B2, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B2 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B2</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-B3"
+                                    data-code="B3"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat B3, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B3 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B3</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-B4"
+                                    data-code="B4"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular aisle-gap-right"
+                                    aria-label="Seat B4, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B4 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B4</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-B5"
+                                    data-code="B5"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat B5, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B5 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B5</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-B6"
+                                    data-code="B6"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat B6, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B6 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B6</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-B7"
+                                    data-code="B7"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat B7, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B7 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B7</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-B8"
+                                    data-code="B8"
+                                    data-price="150"
+                                    data-tier="REGULAR"
+                                    data-booked="false"
+                                    class="seat free tier-regular"
+                                    aria-label="Seat B8, REGULAR, Rs. 150, available"
+                                    aria-disabled="false"
+                                    title="B8 (REGULAR - Rs. 150) [Available]">
+                                <span class="seat-code-text">B8</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button>
+                        </div>
+
+                        <!-- Right Row Letter -->
+                        <div class="row-letter" aria-hidden="true">B</div>
+                    </div>
+                
+                    <!-- Tier Ribbon Header at start of each tier -->
+                    
+                    <div class="tier-ribbon tier-ribbon-premium">
+                        <span>Mezzanine Premium (Rows Câ€“D)</span>
+                        <span>Rs. 250</span>
+                    </div>
+                    
+
+                    <!-- Seat Row -->
+                    <div class="seat-row">
+                        <!-- Left Row Letter -->
+                        <div class="row-letter" aria-hidden="true">C</div>
+
+                        <!-- 8 Seats in Row with Center Aisle Gap -->
+                        <div class="seats-group">
+                            <button type="button"
+                                    id="seat-C1"
+                                    data-code="C1"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat C1, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C1 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C1</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-C2"
+                                    data-code="C2"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat C2, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C2 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C2</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-C3"
+                                    data-code="C3"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat C3, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C3 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C3</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-C4"
+                                    data-code="C4"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium aisle-gap-right"
+                                    aria-label="Seat C4, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C4 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C4</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-C5"
+                                    data-code="C5"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat C5, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C5 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C5</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-C6"
+                                    data-code="C6"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat C6, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C6 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C6</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-C7"
+                                    data-code="C7"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat C7, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C7 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C7</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-C8"
+                                    data-code="C8"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat C8, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="C8 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">C8</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button>
+                        </div>
+
+                        <!-- Right Row Letter -->
+                        <div class="row-letter" aria-hidden="true">C</div>
+                    </div>
+                
+                    <!-- Tier Ribbon Header at start of each tier -->
+                    
+                    
+                    
+
+                    <!-- Seat Row -->
+                    <div class="seat-row">
+                        <!-- Left Row Letter -->
+                        <div class="row-letter" aria-hidden="true">D</div>
+
+                        <!-- 8 Seats in Row with Center Aisle Gap -->
+                        <div class="seats-group">
+                            <button type="button"
+                                    id="seat-D1"
+                                    data-code="D1"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat D1, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D1 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D1</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-D2"
+                                    data-code="D2"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat D2, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D2 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D2</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-D3"
+                                    data-code="D3"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat D3, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D3 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D3</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-D4"
+                                    data-code="D4"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium aisle-gap-right"
+                                    aria-label="Seat D4, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D4 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D4</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-D5"
+                                    data-code="D5"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat D5, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D5 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D5</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-D6"
+                                    data-code="D6"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat D6, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D6 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D6</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-D7"
+                                    data-code="D7"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat D7, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D7 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D7</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-D8"
+                                    data-code="D8"
+                                    data-price="250"
+                                    data-tier="PREMIUM"
+                                    data-booked="false"
+                                    class="seat free tier-premium"
+                                    aria-label="Seat D8, PREMIUM, Rs. 250, available"
+                                    aria-disabled="false"
+                                    title="D8 (PREMIUM - Rs. 250) [Available]">
+                                <span class="seat-code-text">D8</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button>
+                        </div>
+
+                        <!-- Right Row Letter -->
+                        <div class="row-letter" aria-hidden="true">D</div>
+                    </div>
+                
+                    <!-- Tier Ribbon Header at start of each tier -->
+                    
+                    
+                    <div class="tier-ribbon tier-ribbon-vip">
+                        <span>â˜… Royal VIP Lounge (Row E) â˜…</span>
+                        <span>Rs. 400</span>
+                    </div>
+
+                    <!-- Seat Row -->
+                    <div class="seat-row">
+                        <!-- Left Row Letter -->
+                        <div class="row-letter" aria-hidden="true">E</div>
+
+                        <!-- 8 Seats in Row with Center Aisle Gap -->
+                        <div class="seats-group">
+                            <button type="button"
+                                    id="seat-E1"
+                                    data-code="E1"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip"
+                                    aria-label="Seat E1, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E1 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E1</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-E2"
+                                    data-code="E2"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip"
+                                    aria-label="Seat E2, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E2 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E2</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-E3"
+                                    data-code="E3"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip"
+                                    aria-label="Seat E3, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E3 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E3</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-E4"
+                                    data-code="E4"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip aisle-gap-right"
+                                    aria-label="Seat E4, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E4 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E4</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-E5"
+                                    data-code="E5"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip"
+                                    aria-label="Seat E5, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E5 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E5</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-E6"
+                                    data-code="E6"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip"
+                                    aria-label="Seat E6, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E6 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E6</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-E7"
+                                    data-code="E7"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip"
+                                    aria-label="Seat E7, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E7 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E7</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button><button type="button"
+                                    id="seat-E8"
+                                    data-code="E8"
+                                    data-price="400"
+                                    data-tier="VIP"
+                                    data-booked="false"
+                                    class="seat free tier-vip"
+                                    aria-label="Seat E8, VIP, Rs. 400, available"
+                                    aria-disabled="false"
+                                    title="E8 (VIP - Rs. 400) [Available]">
+                                <span class="seat-code-text">E8</span>
+                                <span class="seat-status-mark seat-icon">O</span>
+                            </button>
+                        </div>
+
+                        <!-- Right Row Letter -->
+                        <div class="row-letter" aria-hidden="true">E</div>
+                    </div>
+                
+            </div>
+
+            <!-- Seat States & Tier Legend -->
+            <div class="legend-box">
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-reg">O</span>
+                    <span>Regular (Rs. <span>150</span>)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-prem">O</span>
+                    <span>Premium (Rs. <span>250</span>)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-vip">O</span>
+                    <span>VIP (Rs. <span>400</span>)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-selected">âœ“</span>
+                    <span>Selected</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch swatch-booked">X</span>
+                    <span>Booked</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: "Your Tickets" Panel Styled as a Vintage Ticket Stub -->
+        <aside class="ticket-panel" aria-label="Order Summary and Reservation Checkout">
+            <div class="ticket-panel-header">
+                <div class="ticket-panel-title">Your Tickets</div>
+                <div class="ticket-panel-sub">Admission Stub</div>
+            </div>
+
+            <div class="ticket-panel-body">
+                <!-- Perforated Cutout Divider -->
+                <div class="perforated-cutout" aria-hidden="true">
+                    <div class="perforated-dashed-line"></div>
+                </div>
+
+                <form action="/shows/3/book" method="post" id="bookingForm">
+                    <!-- Hidden field updated by JavaScript clicks -->
+                    <input type="hidden" id="seatCodesHidden">
+
+                    <!-- Selected Seats Display -->
+                    <div class="form-group">
+                        <label class="form-label" for="seatCodesInput">Reserved Seat Codes</label>
+                        <!-- Works with and without JS: name="seatCodes" -->
+                        <input type="text"
+                               id="seatCodesInput"
+                               name="seatCodes"
+                               class="form-control"
+                               placeholder="Click seats above or type e.g. C3, C4"
+                               autocomplete="off">
+                        <small style="color: var(--ink-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+                            Click theatre chairs or type codes separated by commas.
+                        </small>
+                    </div>
+
+                    <!-- Selected Seat Chips Container -->
+                    <div id="liveSelectedSeats" class="chips-container">
+                        <span class="empty-chips-msg">No seats selected yet. Click any available seat in the auditorium.</span>
+                    </div>
+
+                    <!-- Coupon Code Input -->
+                    <div class="form-group">
+                        <label class="form-label" for="couponCode">
+                            Promotional Voucher
+                            <span style="font-weight: normal; color: var(--brass-gold-dark);">(e.g. CINE10)</span>
+                        </label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text"
+                                   id="couponCode"
+                                   name="couponCode"
+                                   class="form-control"
+                                   placeholder="Voucher code"
+                                   style="text-transform: uppercase; font-family: var(--font-mono); font-weight: 700;">
+                        </div>
+                    </div>
+
+                    <!-- Subtotal & Running Total Lines -->
+                    <div class="summary-line">
+                        <span>Admission Subtotal:</span>
+                        <strong id="liveRunningTotal">Rs. 0.00</strong>
+                    </div>
+
+                    <div class="summary-line summary-total">
+                        <span>Estimated Total:</span>
+                        <span id="liveRunningTotalFinal">Rs. 0.00</span>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button type="submit"
+                                id="bookSubmitBtn"
+                                class="btn btn-primary btn-block disabled"
+                                disabled>
+                            <span>Confirm & Book Tickets</span>
+                        </button>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <a href="/" class="btn btn-secondary btn-block" style="min-height: 38px; font-size: 0.85rem;">
+                            <span>â† Return to Showtimes</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="palace-footer">
+    <div class="footer-ornament" aria-hidden="true">
+        <span>â”€â”€â”€â”€â”€â”€</span>
+        <span class="fan-icon">âœ¦ âœ¤ âœ¦</span>
+        <span>â”€â”€â”€â”€â”€â”€</span>
+    </div>
+    <div class="footer-content">
+        <p class="footer-title">CINEBOOK PICTURE PALACE</p>
+        <p class="footer-tagline">Single screen. Three shows. One great night.</p>
+        <p class="footer-meta">
+            <span>Orchestra â€¢ Mezzanine â€¢ Royal VIP Lounge</span>
+            <span class="sep">â€¢</span>
+            <span>40 Handcrafted Velvet Seats</span>
+            <span class="sep">â€¢</span>
+            <span>All-or-Nothing Reservation System</span>
+        </p>
+        <p class="footer-copyright">
+            Â© 2026 CineBook Cinema Management System â€¢ Preserving the Grand Picture Palace Tradition
+        </p>
+    </div>
+</footer>
+
+<script src="/js/seat-map.js"></script>
+<script src="/js/vercel-client.js"></script>
+</body>
+</html>
+

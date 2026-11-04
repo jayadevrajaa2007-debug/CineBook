@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/shows/1", "destination": "/shows/1.html" },
+    { "source": "/shows/2", "destination": "/shows/2.html" },
+    { "source": "/shows/3", "destination": "/shows/3.html" },
+    { "source": "/bookings/lookup", "destination": "/bookings/lookup.html" },
+    { "source": "/bookings/:id", "destination": "/bookings/summary.html" }
+  ]
+}
