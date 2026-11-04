@@ -1,0 +1,8 @@
+target/
+.git/
+.gitignore
+.env
+*.log
+screenshots/
+sheets_export/
+.vscode/
