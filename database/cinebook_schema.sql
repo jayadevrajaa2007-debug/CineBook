@@ -51,11 +51,16 @@ CREATE TABLE IF NOT EXISTS bookings (
     status VARCHAR(20) NOT NULL,
     created_at DATETIME NOT NULL,
     cancelled_at DATETIME NULL,
+    sheet_sync_status VARCHAR(10) NOT NULL DEFAULT 'PENDING',
+    sheet_synced_at DATETIME NULL,
+    sheet_sync_error VARCHAR(255) NULL,
     CONSTRAINT chk_booking_status CHECK (status IN ('CONFIRMED', 'CANCELLED')),
+    CONSTRAINT chk_sheet_sync_status CHECK (sheet_sync_status IN ('PENDING', 'SYNCED', 'FAILED')),
     CONSTRAINT fk_bookings_show FOREIGN KEY (show_id) REFERENCES shows (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE INDEX idx_bookings_show_id ON bookings (show_id);
+CREATE INDEX idx_bookings_sheet_sync_status ON bookings (sheet_sync_status);
 
 -- 4. Booking Seats Table
 -- Generated column ensures at database level that an active seat cannot be double-booked.

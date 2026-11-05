@@ -16,21 +16,21 @@ const SPREADSHEET_ID = '1TNZNxdqQ37BX-w8Gj7wmrXLCV2AQ5vzQeYPXmh3R4jI';
 function setupDatabase() {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
-  // 1. Bookings Table
-  let bookingsSheet = ss.getSheetByName('Bookings');
-  if (!bookingsSheet) {
-    bookingsSheet = ss.insertSheet('Bookings');
+  // 1. Tickets Table (13 Columns A to M)
+  let ticketsSheet = ss.getSheetByName('Tickets');
+  if (!ticketsSheet) {
+    ticketsSheet = ss.insertSheet('Tickets');
   }
-  bookingsSheet.clear();
-  const bookingHeaders = [
-    ['Booking ID', 'Movie Title', 'Showtime', 'Reserved Seats', 'Subtotal (Rs)', 'Coupon', 'Discount (Rs)', 'Total Paid (Rs)', 'Refund (Rs)', 'Status', 'Booked At', 'Cancelled At']
+  ticketsSheet.clear();
+  const ticketHeaders = [
+    ['Booking ID', 'Movie', 'Show Time', 'Seats', 'Seat Types', 'Subtotal', 'Coupon', 'Discount', 'Total', 'Status', 'Refund', 'Booked At', 'Cancelled At']
   ];
-  bookingsSheet.getRange(1, 1, 1, bookingHeaders[0].length)
-    .setValues(bookingHeaders)
+  ticketsSheet.getRange(1, 1, 1, ticketHeaders[0].length)
+    .setValues(ticketHeaders)
     .setBackground('#8c1c2b')
     .setFontColor('#ffffff')
     .setFontWeight('bold');
-  bookingsSheet.setFrozenRows(1);
+  ticketsSheet.setFrozenRows(1);
 
   // 2. Shows Table
   let showsSheet = ss.getSheetByName('Shows');
@@ -188,3 +188,4 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
+

@@ -1,0 +1,11 @@
+Dockerfile*
+pom.xml
+src/
+target/
+database/
+scripts/
+sheets_export/
+credentials/
+*.json
+!package.json
+!vercel.json

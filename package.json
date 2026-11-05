@@ -1,0 +1,9 @@
+{
+  "name": "cinebook",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CineBook - Vintage Picture Palace Web App",
+  "scripts": {
+    "build": "echo 'Static build complete'"
+  }
+}

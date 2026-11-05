@@ -55,3 +55,4 @@ $payload = @{
 Write-Host "Sending $($rows.Count) booking records to Google Sheets..." -ForegroundColor Cyan
 $response = Invoke-RestMethod -Uri $WebhookUrl -Method Post -Body $payload -ContentType "application/json"
 Write-Host "Response from Google Sheets: $($response | ConvertTo-Json -Compress)" -ForegroundColor Green
+

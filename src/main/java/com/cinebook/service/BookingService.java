@@ -10,6 +10,9 @@ import com.cinebook.repo.BookingRepository;
 import com.cinebook.repo.BookingSeatRepository;
 import com.cinebook.repo.SeatRepository;
 import com.cinebook.repo.ShowRepository;
+import com.cinebook.sheets.BookingSavedEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,17 +39,29 @@ public class BookingService implements Bookable {
     private final BookingRepository bookingRepository;
     private final BookingSeatRepository bookingSeatRepository;
     private final PricingService pricingService;
+    private final ApplicationEventPublisher eventPublisher;
 
     public BookingService(ShowRepository showRepository,
                           SeatRepository seatRepository,
                           BookingRepository bookingRepository,
                           BookingSeatRepository bookingSeatRepository,
                           PricingService pricingService) {
+        this(showRepository, seatRepository, bookingRepository, bookingSeatRepository, pricingService, null);
+    }
+
+    @Autowired
+    public BookingService(ShowRepository showRepository,
+                          SeatRepository seatRepository,
+                          BookingRepository bookingRepository,
+                          BookingSeatRepository bookingSeatRepository,
+                          PricingService pricingService,
+                          @Autowired(required = false) ApplicationEventPublisher eventPublisher) {
         this.showRepository = showRepository;
         this.seatRepository = seatRepository;
         this.bookingRepository = bookingRepository;
         this.bookingSeatRepository = bookingSeatRepository;
         this.pricingService = pricingService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -127,7 +142,11 @@ public class BookingService implements Bookable {
                 booking.addBookingSeat(bookingSeat);
             }
 
-            return bookingRepository.save(booking);
+            Booking saved = bookingRepository.save(booking);
+            if (eventPublisher != null) {
+                eventPublisher.publishEvent(new BookingSavedEvent(saved.getId()));
+            }
+            return saved;
         } catch (DataIntegrityViolationException ex) {
             // Converts database unique constraint violation (active_seat_id) into friendly message
             throw new SeatUnavailableException("One or more selected seats were just booked by another guest. Please choose different seats.");
@@ -156,6 +175,7 @@ public class BookingService implements Bookable {
         booking.setStatus(BookingStatus.CANCELLED);
         booking.setCancelledAt(LocalDateTime.now());
         booking.setRefundAmount(refundAmount);
+        booking.setSheetSyncStatus(SheetSyncStatus.PENDING);
 
         // Free the seats by marking active = false
         for (BookingSeat bookingSeat : booking.getBookingSeats()) {
@@ -163,7 +183,11 @@ public class BookingService implements Bookable {
             bookingSeatRepository.save(bookingSeat);
         }
 
-        return bookingRepository.save(booking);
+        Booking saved = bookingRepository.save(booking);
+        if (eventPublisher != null) {
+            eventPublisher.publishEvent(new BookingSavedEvent(saved.getId()));
+        }
+        return saved;
     }
 
     /**

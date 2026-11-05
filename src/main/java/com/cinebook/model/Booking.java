@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 @Table(
     name = "bookings",
     indexes = {
-        @Index(name = "idx_bookings_show_id", columnList = "show_id")
+        @Index(name = "idx_bookings_show_id", columnList = "show_id"),
+        @Index(name = "idx_bookings_sheet_sync_status", columnList = "sheet_sync_status")
     }
 )
 public class Booking {
@@ -55,6 +56,16 @@ public class Booking {
     @Column(name = "cancelled_at")
     private LocalDateTime cancelledAt;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sheet_sync_status", length = 10, nullable = false)
+    private SheetSyncStatus sheetSyncStatus = SheetSyncStatus.PENDING;
+
+    @Column(name = "sheet_synced_at")
+    private LocalDateTime sheetSyncedAt;
+
+    @Column(name = "sheet_sync_error", length = 255)
+    private String sheetSyncError;
+
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BookingSeat> bookingSeats = new ArrayList<>();
 
@@ -69,6 +80,7 @@ public class Booking {
         this.totalAmount = totalAmount != null ? totalAmount.setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         this.status = BookingStatus.CONFIRMED;
         this.createdAt = LocalDateTime.now();
+        this.sheetSyncStatus = SheetSyncStatus.PENDING;
     }
 
     public Long getId() {
@@ -177,6 +189,34 @@ public class Booking {
 
     public String getFormattedCancelledAt() {
         return cancelledAt != null ? cancelledAt.format(DATE_TIME_FORMATTER) : "";
+    }
+
+    public SheetSyncStatus getSheetSyncStatus() {
+        return sheetSyncStatus;
+    }
+
+    public void setSheetSyncStatus(SheetSyncStatus sheetSyncStatus) {
+        this.sheetSyncStatus = sheetSyncStatus != null ? sheetSyncStatus : SheetSyncStatus.PENDING;
+    }
+
+    public LocalDateTime getSheetSyncedAt() {
+        return sheetSyncedAt;
+    }
+
+    public void setSheetSyncedAt(LocalDateTime sheetSyncedAt) {
+        this.sheetSyncedAt = sheetSyncedAt;
+    }
+
+    public String getSheetSyncError() {
+        return sheetSyncError;
+    }
+
+    public void setSheetSyncError(String sheetSyncError) {
+        if (sheetSyncError != null && sheetSyncError.length() > 255) {
+            this.sheetSyncError = sheetSyncError.substring(0, 255);
+        } else {
+            this.sheetSyncError = sheetSyncError;
+        }
     }
 
     /**

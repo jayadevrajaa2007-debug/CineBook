@@ -221,4 +221,41 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // 4. Google Sheets CSV Exporter
+    window.exportTicketsToGoogleSheetsCSV = function () {
+        const store = getStore();
+        const headers = ["Booking ID", "Movie", "Show Time", "Seats", "Seat Types", "Subtotal", "Coupon", "Discount", "Total", "Status", "Refund", "Booked At", "Cancelled At"];
+        let csvContent = headers.join(",") + "\n";
+
+        Object.keys(store).sort((a, b) => Number(a) - Number(b)).forEach(id => {
+            const b = store[id];
+            const row = [
+                b.formattedId || ("BK" + b.id),
+                '"' + (b.movieName || "Feature Presentation").replace(/"/g, '""') + '"',
+                '"' + (b.showTime || "7:30 PM").replace(/"/g, '""') + '"',
+                '"' + (b.seatCodes || "").replace(/"/g, '""') + '"',
+                '"' + (b.seatsSummary || "").replace(/"/g, '""') + '"',
+                b.subtotal || "0.00",
+                '"' + (b.couponCode || "").replace(/"/g, '""') + '"',
+                b.discount || "0.00",
+                b.totalAmount || "0.00",
+                b.status || "CONFIRMED",
+                b.refundAmount || "",
+                '"' + (b.createdAt || "").replace(/"/g, '""') + '"',
+                '"' + (b.cancelledAt || "").replace(/"/g, '""') + '"'
+            ];
+            csvContent += row.join(",") + "\n";
+        });
+
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "CineBook_Tickets_GoogleSheets.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 });
+

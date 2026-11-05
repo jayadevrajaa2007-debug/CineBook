@@ -323,3 +323,114 @@ Follow these steps to verify each functional requirement in a live browser:
 - **Cause**: Another process or background server is bound to port 8080.
 - **Solution**: Run `netstat -ano | findstr 8080` to find the conflicting process ID, terminate it, or change `server.port=8081` in `application.properties`.
 
+---
+
+## Google Sheets Real-Time Ticket Sync
+
+CineBook includes a production-grade **Google Sheets Outbox Sync Engine**. The local MySQL database remains the authoritative single source of truth for all transactions; the Google Sheet acts as a real-time, tamper-resistant external ticket ledger.
+
+```
++-------------------+       commit tx       +--------------------+
+|  CineBook Guest   | --------------------> |   MySQL Database   |
+| (Book / Cancel)   |                       | (Outbox: PENDING)  |
++-------------------+                       +--------------------+
+                                                      |
+                                       @TransactionalEventListener
+                                              (Async Push)
+                                                      |
+                                                      v
+                                            +--------------------+
+                                            |  Google Sheets API |
+                                            | (Tickets Worksheet)|
+                                            +--------------------+
+```
+
+### Key Architectural Characteristics
+- **Transactional Outbox Pattern**: When a booking is confirmed or cancelled, `sheet_sync_status` is marked `PENDING` inside the primary database transaction. Network lag, Google downtime, or invalid credentials can **never** fail a booking or roll back a payment.
+- **Idempotent Row Upserting**: The sync client scans Column A for the unique Booking ID (`BK1001`). If found, it updates that exact row with the latest status, refund, and timestamps. If not found, it appends a new row. Retries never create duplicates.
+- **Formula Injection Defense**: All user-supplied fields (coupons, movie names) starting with `=`, `+`, `-`, or `@` are automatically sanitized with a single-quote prefix `'` before writing to Google Sheets using `RAW` input mode.
+- **Resilient Retry & Cooldown**: HTTP 429 (rate limits) and 5xx errors trigger automatic exponential backoff (up to 3 attempts). Failed syncs enter a 2-minute cooldown before being automatically retried by the `@Scheduled` background worker (every 30 seconds).
+
+---
+
+### Step-by-Step Google Cloud Setup (10 Minutes)
+
+1. Open [Google Cloud Console](https://console.cloud.google.com/) and create a project (e.g., `cinebook`).
+2. Navigate to **APIs & Services → Library**, search for **Google Sheets API**, and click **Enable**.
+3. Go to **IAM & Admin → Service Accounts → Create Service Account**:
+   - Name: `cinebook-sheets`
+   - Click **Create and Continue**, then **Done**.
+4. Open your new service account, select the **Keys** tab, click **Add Key → Create new key → JSON**.
+5. Save the downloaded file as `google-service-account.json` and move it to:
+   ```
+   judei\credentials\google-service-account.json
+   ```
+6. Open your Google Sheet ([CineBook Tickets](https://docs.google.com/spreadsheets/d/1TNZNxdqQ37BX-w8Gj7wmrXLCV2AQ5vzQeYPXmh3R4jI/edit)), rename the first tab to **`Tickets`**, click **Share**, paste your service account's `client_email` (e.g. `cinebook-sheets@yourproject.iam.gserviceaccount.com`), and grant it **Editor** permissions.
+7. Copy your **Sheet ID** from the URL (the string between `/d/` and `/edit`):
+   ```
+   1TNZNxdqQ37BX-w8Gj7wmrXLCV2AQ5vzQeYPXmh3R4jI
+   ```
+8. Add these lines to your `.env` file:
+   ```env
+   GOOGLE_SHEETS_ENABLED=true
+   GOOGLE_SHEET_ID=1TNZNxdqQ37BX-w8Gj7wmrXLCV2AQ5vzQeYPXmh3R4jI
+   GOOGLE_SHEET_TAB=Tickets
+   GOOGLE_SHEETS_CREDENTIALS_FILE=credentials/google-service-account.json
+   ```
+
+---
+
+### 13-Column Google Sheet Layout (`Tickets` Tab)
+
+| Col | Header | Description | Example Value |
+| :---: | :--- | :--- | :--- |
+| **A** | `Booking ID` | Unique formatted identifier | `BK1001` |
+| **B** | `Movie` | Feature presentation title | `Interstellar` |
+| **C** | `Show Time` | Screening time | `7:30 PM` |
+| **D** | `Seats` | Comma-separated sorted seat codes | `C3, C4` |
+| **E** | `Seat Types` | Tier breakdown matching seats | `Premium, Premium` |
+| **F** | `Subtotal` | Base price in Rupees (2 decimals) | `500.00` |
+| **G** | `Coupon` | Applied discount coupon code | `CINE10` |
+| **H** | `Discount` | Value discounted in Rupees | `50.00` |
+| **I** | `Total` | Final amount charged | `450.00` |
+| **J** | `Status` | Current lifecycle state | `CONFIRMED` / `CANCELLED` |
+| **K** | `Refund` | 80% refund if cancelled | `360.00` |
+| **L** | `Booked At` | Timestamp in `Asia/Kolkata` zone | `2026-11-06 19:30:12` |
+| **M** | `Cancelled At`| Cancellation timestamp (or empty) | `2026-11-06 20:15:45` |
+
+---
+
+### Inspecting Sync Status in MySQL Workbench
+
+You can verify the outbox sync status directly in MySQL Workbench:
+```sql
+SELECT 
+    id AS booking_num,
+    CONCAT('BK', id) AS booking_id,
+    status,
+    total_amount,
+    sheet_sync_status,
+    sheet_synced_at,
+    sheet_sync_error
+FROM bookings
+ORDER BY id DESC;
+```
+
+---
+
+### Sync Troubleshooting
+
+| Error Symptom | Root Cause | Immediate Resolution |
+| :--- | :--- | :--- |
+| **HTTP 403 (Forbidden)** | Sheet has not been shared with the service account. | Click **Share** on your Sheet and add the `client_email` as **Editor**. |
+| **HTTP 404 (Not Found)** | Sheet ID or tab name is incorrect. | Verify `GOOGLE_SHEET_ID` matches your Sheet URL and tab is named exactly `Tickets`. |
+| **Credentials file not found** | File path in `.env` is incorrect. | Ensure `google-service-account.json` is located in `credentials/` folder. |
+| **Sync is disabled** | `GOOGLE_SHEETS_ENABLED` is set to `false`. | Set `GOOGLE_SHEETS_ENABLED=true` in `.env` and restart the application. |
+
+---
+
+### Security & Data Integrity Guarantees
+- **No Secrets in Version Control**: `credentials/` and `*service-account*.json` are strictly ignored by `.gitignore`. The service account private key is never logged or exposed.
+- **Unidirectional Mirror**: The Google Sheet is a read-only mirror. Direct manual edits in the Google Sheet will never overwrite or corrupt the authoritative MySQL relational database.
+
+
